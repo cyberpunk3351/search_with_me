@@ -1,13 +1,15 @@
 # Search with Me
 
-Search with Me is a lightweight Firefox extension that lets you search selected text from the right-click menu.
+Search with Me is a Firefox extension for searching selected text from the right-click menu using custom search engines.
 
 ## Features
 
-- Add any search site that supports a `%s` placeholder for the query.
-- Search selected text with one click from the context menu.
-- Store your custom engines locally in Firefox.
-- No analytics, no external services, no account required.
+- Search selected text from the context menu.
+- Start with DuckDuckGo as the default engine.
+- Add, remove, and reorder engines in the options page.
+- Validate search URLs before saving or exporting.
+- Import and export engine lists as JSON.
+- Store everything locally in Firefox.
 
 ## How It Works
 
@@ -18,16 +20,27 @@ Search with Me is a lightweight Firefox extension that lets you search selected 
 
 ## Configuration
 
-Open the extension popup or the options page and add engines in this format:
+Each engine needs:
 
-- **Name**: the label shown in the menu.
-- **URL**: a search URL containing `%s` where the selected text should be inserted.
+- a **name** shown in the menu;
+- a **URL** containing `%s` where the selected text should be inserted.
 
 Example:
 
 ```text
 https://example.com/search?q=%s
 ```
+
+If `%s` is omitted, the extension falls back to adding the selection as a query parameter.
+
+## Import and Export
+
+Use the options page to export your engines as JSON or import them back later.
+
+Supported import formats:
+
+- `{ "engines": [...] }`
+- `[...]`
 
 ## Privacy
 
@@ -36,6 +49,7 @@ The extension stores your search engines locally in Firefox using `storage.local
 ## Project Structure
 
 - `background.js` - builds the context menu and opens search tabs.
+- `engines.js` - shared engine storage, validation, and URL helpers.
 - `options.js` - manages the settings form and saves engines.
 - `options.html` - settings UI for the extension.
 - `manifest.json` - Firefox WebExtension manifest.
