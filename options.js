@@ -9,6 +9,11 @@ const dragState = {
   row: null
 };
 
+function getEngineInitial(name) {
+  const value = String(name ?? "").trim();
+  return value ? value[0].toUpperCase() : "?";
+}
+
 function setStatus(message, isError = false) {
   status.textContent = message;
   status.dataset.variant = isError ? "error" : "success";
@@ -20,6 +25,9 @@ function createEngineRow(engine = {}) {
   row.className = "engine-row";
   row.dataset.engineId = engine.id ?? "";
 
+  const meta = document.createElement("div");
+  meta.className = "engine-meta";
+
   const handle = document.createElement("button");
   handle.type = "button";
   handle.className = "drag-handle";
@@ -27,6 +35,38 @@ function createEngineRow(engine = {}) {
   handle.setAttribute("aria-label", "Drag to reorder");
   handle.draggable = true;
   handle.innerHTML = '<span class="drag-handle-line"></span><span class="drag-handle-line"></span><span class="drag-handle-line"></span>';
+
+  const icon = document.createElement("span");
+  icon.className = "engine-icon";
+  icon.title = "Favicon preview";
+
+  const iconImage = document.createElement("img");
+  iconImage.alt = "";
+  iconImage.hidden = true;
+
+  const iconFallback = document.createElement("span");
+  iconFallback.className = "engine-icon-fallback";
+  iconFallback.textContent = getEngineInitial(engine.name);
+
+  const updateIcon = () => {
+    iconFallback.textContent = getEngineInitial(nameInput.value);
+
+    const faviconUrl = getEngineFaviconUrl(urlInput.value);
+    if (!faviconUrl) {
+      iconImage.hidden = true;
+      iconFallback.hidden = false;
+      return;
+    }
+
+    iconImage.hidden = false;
+    iconFallback.hidden = true;
+    iconImage.src = `${faviconUrl}?cache=${Date.now()}`;
+  };
+
+  iconImage.addEventListener("error", () => {
+    iconImage.hidden = true;
+    iconFallback.hidden = false;
+  });
   
   const nameInput = document.createElement("input");
   nameInput.type = "text";
@@ -43,6 +83,7 @@ function createEngineRow(engine = {}) {
   const clearError = () => {
     nameInput.classList.remove("input-error");
     urlInput.classList.remove("input-error");
+    updateIcon();
   };
 
   nameInput.addEventListener("input", clearError);
@@ -110,8 +151,12 @@ function createEngineRow(engine = {}) {
     setStatus("Order updated.");
   });
   
-  row.append(handle, nameInput, urlInput, removeBtn);
+  icon.append(iconImage, iconFallback);
+  meta.append(handle, icon);
+  row.append(meta, nameInput, urlInput, removeBtn);
   container.append(row);
+
+  updateIcon();
 }
 
 function renderEngines(engines) {

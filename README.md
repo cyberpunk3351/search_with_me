@@ -8,6 +8,7 @@ Search with Me is a Firefox extension for searching selected text from the right
 - Start with DuckDuckGo as the default engine.
 - Add, remove, and reorder engines in the options page.
 - Validate search URLs before saving or exporting.
+- Show favicon previews for each engine when available.
 - Import and export engine lists as JSON.
 - Store everything locally in Firefox.
 
