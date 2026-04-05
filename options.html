@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Search with me — Settings</title>
+  <style>
+    :root {
+      --bg-color: #1e1e1e;
+      --text-color: #e0e0e0;
+      --input-bg: #2d2d2d;
+      --border-color: #3d3d3d;
+      --accent-blue: #0078d4;
+      --accent-green: #28a745;
+      --accent-red: #dc3545;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 15px;
+      margin: 0;
+      width: 450px; /* Width for floating popup */
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      margin-top: 0;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    p { font-size: 0.9rem; opacity: 0.8; }
+    code { background: var(--input-bg); padding: 2px 4px; border-radius: 3px; }
+
+    .engine-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+
+    input {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 6px;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    input:focus { border-color: var(--accent-blue); }
+
+    .name-input { width: 100px; }
+    .url-input { flex: 1; min-width: 0; }
+
+    button {
+      padding: 6px 12px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    button:hover { opacity: 0.9; }
+
+    .remove-btn {
+      background: var(--accent-red);
+      color: white;
+      padding: 6px 8px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    #add-btn { background: var(--accent-blue); color: white; }
+    #save-btn { background: var(--accent-green); color: white; }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-color); }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+  </style>
+</head>
+<body>
+  <h1>Search with me</h1>
+  <p>Use <code>%s</code> for selection text.</p>
+  
+  <div id="engines-container"></div>
+  
+  <div class="footer">
+    <button id="add-btn">+ Add Site</button>
+    <button id="save-btn">Save Settings</button>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
