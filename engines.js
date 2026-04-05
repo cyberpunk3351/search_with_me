@@ -95,22 +95,3 @@ function isValidSearchUrl(template) {
     return false;
   }
 }
-
-function getEngineFaviconUrl(template) {
-  const searchTemplate = String(template ?? "").trim();
-
-  if (!searchTemplate) {
-    return "";
-  }
-
-  const resolved = searchTemplate.includes("%s")
-    ? searchTemplate.replace("%s", "")
-    : searchTemplate;
-
-  try {
-    const parsed = new URL(resolved);
-    return `${parsed.protocol}//${parsed.host}/favicon.ico`;
-  } catch {
-    return "";
-  }
-}
